@@ -1,0 +1,15 @@
+{
+	"variables": {
+		"sshUser": "root",
+		"sshPass": "Default",
+		"sshPort": 22,
+		"sshTimeout": "15m",
+		"sshAttempts": 15,
+		"cpuNum": "1",
+		"coresNum": "4",
+		"memoryNum": "12296",
+		"hddSize": "500000",
+		"hddType": "scsi",
+		"localUser": "my_user"
+	}
+}

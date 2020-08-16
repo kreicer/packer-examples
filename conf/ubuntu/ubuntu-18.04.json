@@ -1,0 +1,40 @@
+{
+	"builders": [{
+		"type": "vmware-iso",
+		"guest_os_type": "linux",
+		"iso_url": "http://cdimage.ubuntu.com/releases/18.04.3/release/ubuntu-18.04.3-server-amd64.iso",
+		"iso_checksum": "cb7cd5a0c94899a04a536441c8b6d2bf",
+		"iso_checksum_type": "md5",
+		"ssh_username": "{{ user `sshUser` }}",
+		"ssh_password": "{{ user `sshPass` }}",
+		"ssh_port": {{ user `sshPort` }},
+		"ssh_timeout": "{{ user `sshTimeout` }}",
+		"ssh_handshake_attempts": "{{ user `sshAttempts` }}",
+		"skip_validate_credentials": true,
+		"disk_size": "{{ user `hddSize` }}",
+		"disk_adapter_type": "{{ user `hddType` }}",
+		"cpus": "{{ user `cpuNum` }}",
+		"cores": "{{ user `coresNum` }}",
+		"memory": "{{ user `memoryNum` }}",
+		"http_directory": "http",
+		"shutdown_command": "shutdown -P now",
+		"boot_wait": "10s",
+		"boot_command": [
+			"<enter><f6><esc><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+        		"noapic preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ubuntu/18/preseed.cfg ",
+        		"debian-installer=en_US auto locale=en_US kbd-chooser/method=us ",
+        		"hostname=yva-platform ",
+        		"fb=false debconf/frontend=noninteractive ",
+        		"keyboard-configuration/modelcode=SKIP keyboard-configuration/layout=USA keyboard-configuration/variant=USA console-setup/ask_detect=false ",
+        		"initrd=/install/initrd.gz -- <enter>"
+		]
+	}],
+	"provisioners": [{
+		"execute_command": "sudo bash '{{.Path}}'",
+		"environment_vars": [
+            "local_user={{user `localUser`}}"
+        ],
+		"script": "scripts/ubuntu/18/first.sh",
+		"type": "shell"
+	}]
+}
